@@ -1,24 +1,14 @@
 import { FC, useEffect, useState } from "react";
 import Link from "next/link";
-import { graphqlRequest } from "../../lib/graphqlClient";
-import { Product } from "../../lib/product";
+import styles from "./[id].module.css";
+import { Product, getProduct } from "../../lib/product";
 import { Layout } from "../../components/Layout";
 import { Center } from "../../components/Center";
 import { useRouter } from "next/router";
 
 const ProductPage: FC = () => {
   const router = useRouter(),
-    productId = router.query.id as string,
-    getProductQuery = `
-      query getProduct($id: ID!) {
-        product(id: $id) {
-          name
-          price
-          imageUrl
-          description
-        }
-      }
-    `;
+    productId = router.query.id as string;
 
   const [product, setProduct] = useState<Product | null>(null);
 
@@ -32,17 +22,12 @@ const ProductPage: FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [productId]);
 
-  async function getProduct(productId: string): Promise<Product> {
-    const productData = await graphqlRequest({ query: getProductQuery, variables: { id: productId } });
-    return productData.product;
-  }
-
   if (!product) return <Center>wait...</Center>;
 
   return (
     <Layout>
-      <div>
-        <img src={product.imageUrl} alt="商品画像"></img>
+      <div className={styles.card}>
+        <img className={styles.hero} src={product.imageUrl} alt="商品画像"></img>
         <div>
           <div>{product.name}</div>
           <div>{product.price}円</div>
