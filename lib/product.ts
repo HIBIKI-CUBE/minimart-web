@@ -22,6 +22,7 @@ const listProductsQuery = `
   getProductQuery = `
     query getProduct($id: ID!) {
       product(id: $id) {
+        id
         name
         price
         imageUrl
