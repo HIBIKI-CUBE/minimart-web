@@ -3,6 +3,7 @@ import { FC, useEffect, useState } from "react";
 import { graphqlRequest } from "../../lib/graphqlClient";
 import { Product } from "../../lib/product";
 import { Layout } from "../../components/Layout";
+import { Center } from "../../components/Center"
 import { useRouter } from "next/router";
 
 const ProductPage: FC = () => {
@@ -34,7 +35,7 @@ const ProductPage: FC = () => {
     return productData.product;
   }
 
-  if (!product) return <div>wait...</div>;
+  if (!product) return <Center>wait...</Center>;
 
   return <Layout>{product.name}</Layout>;
 };
